@@ -200,6 +200,33 @@
         "documentation": {}
     },
     {
+        "label": "number_public_visibility_methods",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def number_public_visibility_methods(file_path):\n    \"\"\"Count the number of public visibility methods in a Kotlin project.\"\"\"\n    try:\n        with open(file_path, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        parser = Parser(code)\n        result = parser.parse()\n        if not result.declarations:\n            return 0\n        public_method_count = 0",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
+        "label": "number_private_visibility_methods",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def number_private_visibility_methods(file_path):\n    \"\"\"Count the number of private visibility methods in a Kotlin project.\"\"\"\n    try:\n        with open(file_path, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        parser = Parser(code)\n        result = parser.parse()\n        if not result.declarations:\n            return 0\n        private_method_count = 0",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
+        "label": "number_protected_visibility_methods",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def number_protected_visibility_methods(file_path):\n    \"\"\"Count the number of protected visibility methods in a Kotlin project.\"\"\"\n    try:\n        with open(file_path, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        parser = Parser(code)\n        result = parser.parse()\n        if not result.declarations:\n            return 0\n        protected_method_count = 0",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
         "label": "extracted_method",
         "kind": 2,
         "importPath": "program.controller",

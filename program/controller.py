@@ -144,6 +144,106 @@ def count_num_static_not_final_attributes(file_path):
         print(f"Error processing file {file_path}: {e}")
         return 0
 
+def number_public_visibility_methods(file_path):
+    """Count the number of public visibility methods in a Kotlin project."""
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            code = f.read()
+        
+        parser = Parser(code)
+        result = parser.parse()
+
+        if not result.declarations:
+            return 0
+        
+        public_method_count = 0
+
+        for declaration in result.declarations:
+            if isinstance(declaration, node.ClassDeclaration):
+                print(f"Class: {declaration.name}")
+                for member in declaration.body.members:
+                    if isinstance(member, node.FunctionDeclaration):
+                        # Check if the method is public (no visibility modifier or explicitly marked as 'public')
+                        modifiers = getattr(member, "modifiers", [])
+                        is_public = "private" not in modifiers and "protected" not in modifiers and "internal" not in modifiers
+                        
+                        if is_public:
+                            print(f"Public method: {member.name}")
+                            public_method_count += 1
+        
+        return public_method_count
+    
+    except Exception as e:
+        print(f"Error processing file {file_path}: {e}")
+        return 0
+
+
+def number_private_visibility_methods(file_path):
+    """Count the number of private visibility methods in a Kotlin project."""
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            code = f.read()
+        
+        parser = Parser(code)
+        result = parser.parse()
+
+        if not result.declarations:
+            return 0
+        
+        private_method_count = 0
+
+        for declaration in result.declarations:
+            if isinstance(declaration, node.ClassDeclaration):
+                print(f"Class: {declaration.name}")
+                for member in declaration.body.members:
+                    if isinstance(member, node.FunctionDeclaration):
+                        # Check if the method is private
+                        modifiers = getattr(member, "modifiers", [])
+                        is_private = "private" in modifiers
+                        
+                        if is_private:
+                            print(f"Private method: {member.name}")
+                            private_method_count += 1
+        
+        return private_method_count
+    
+    except Exception as e:
+        print(f"Error processing file {file_path}: {e}")
+        return 0
+
+def number_protected_visibility_methods(file_path):
+    """Count the number of protected visibility methods in a Kotlin project."""
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            code = f.read()
+        
+        parser = Parser(code)
+        result = parser.parse()
+
+        if not result.declarations:
+            return 0
+        
+        protected_method_count = 0
+
+        for declaration in result.declarations:
+            if isinstance(declaration, node.ClassDeclaration):
+                print(f"Class: {declaration.name}")
+                for member in declaration.body.members:
+                    if isinstance(member, node.FunctionDeclaration):
+                        # Check if the method is protected
+                        modifiers = getattr(member, "modifiers", [])
+                        is_protected = "protected" in modifiers
+                        
+                        if is_protected:
+                            print(f"Protected method: {member.name}")
+                            protected_method_count += 1
+        
+        return protected_method_count
+    
+    except Exception as e:
+        print(f"Error processing file {file_path}: {e}")
+        return 0
+
 
 def extracted_method(file_path):
     """Ekstrak informasi metode dari file Kotlin."""
@@ -180,11 +280,26 @@ def extracted_method(file_path):
         woc_values = count_woc(cc_values)
         count_num_final_not_static_attributes_values = count_num_final_not_static_attributes(file_path)
         num_static_not_final_attributes_values = count_num_static_not_final_attributes(file_path)
-        
+        number_public_visibility_methods_values = number_public_visibility_methods(file_path)
+        number_private_visibility_methods_values = number_private_visibility_methods(file_path)
+        number_protected_visibility_methods_values = number_protected_visibility_methods(file_path)
 
         for (function_names, (cc_value, loc_count, maxnesting)), woc in zip(method_function.items(), woc_values):
                 
-                    datas.append({"Package": package_name, "Class": class_name, "Method": function_names, "LOC": loc_count, "Max Nesting": maxnesting, "CC": cc_value, "WOC": woc, "count_num_final_not_static_attributes" : count_num_final_not_static_attributes_values, "num_static_not_final_attributes" : num_static_not_final_attributes_values})
+                    datas.append({
+                        "Package": package_name,
+                        "Class": class_name,
+                        "Method": function_names,
+                        "LOC": loc_count,
+                        "Max Nesting": maxnesting,
+                        "CC": cc_value,
+                        "WOC": woc,
+                        "count_num_final_not_static_attributes" : count_num_final_not_static_attributes_values,
+                        "num_static_not_final_attributes" : num_static_not_final_attributes_values,
+                        "number_public_visibility_methods" : number_public_visibility_methods_values,
+                        "number_private_visibility_methods" : number_private_visibility_methods_values,
+                        "number_protected_visibility_methods" : number_protected_visibility_methods_values
+                        })
         
         return datas if datas else [{"Package": package_name, "Class": class_name, "Method": "None", "LOC": 0, "Max Nesting": 0, "CC": 0, "WOC": 0,"Error": "No functions found"}]
     
