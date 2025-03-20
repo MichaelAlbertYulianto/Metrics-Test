@@ -222,7 +222,7 @@
         "kind": 2,
         "importPath": "program.controller",
         "description": "program.controller",
-        "peekOfCode": "def number_protected_visibility_methods(file_path):\n    \"\"\"Count the number of protected visibility methods in a Kotlin project.\"\"\"\n    try:\n        with open(file_path, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        parser = Parser(code)\n        result = parser.parse()\n        if not result.declarations:\n            return 0\n        protected_method_count = 0",
+        "peekOfCode": "def number_protected_visibility_methods(file_path):\n    \"\"\"Count the number of protected visibility methods and properties in a Kotlin project.\"\"\"\n    try:\n        with open(file_path, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        parser = Parser(code)\n        result = parser.parse()\n        if not result.declarations:\n            return 0\n        protected_count = 0",
         "detail": "program.controller",
         "documentation": {}
     },

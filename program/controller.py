@@ -212,7 +212,7 @@ def number_private_visibility_methods(file_path):
         return 0
 
 def number_protected_visibility_methods(file_path):
-    """Count the number of protected visibility methods in a Kotlin project."""
+    """Count the number of protected visibility methods and properties in a Kotlin project."""
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             code = f.read()
@@ -223,22 +223,40 @@ def number_protected_visibility_methods(file_path):
         if not result.declarations:
             return 0
         
-        protected_method_count = 0
+        protected_count = 0
 
         for declaration in result.declarations:
             if isinstance(declaration, node.ClassDeclaration):
                 print(f"Class: {declaration.name}")
                 for member in declaration.body.members:
+                    # Check for protected methods (functions)
                     if isinstance(member, node.FunctionDeclaration):
-                        # Check if the method is protected
                         modifiers = getattr(member, "modifiers", [])
-                        is_protected = "protected" in modifiers
-                        
-                        if is_protected:
+                        if "protected" in modifiers:
                             print(f"Protected method: {member.name}")
-                            protected_method_count += 1
+                            protected_count += 1
+                    
+                    # Check for protected properties (variables)
+                    if isinstance(member, node.PropertyDeclaration):
+                        modifiers = getattr(member, "modifiers", [])
+                        if "protected" in modifiers:
+                            # Extract the property name
+                            property_name = None
+                            if hasattr(member, "declaration") and hasattr(member.declaration, "name"):
+                                property_name = member.declaration.name
+                            elif hasattr(member, "value") and hasattr(member.value, "name"):
+                                property_name = member.value.name
+                            else:
+                                # Fallback: Try to extract the name from the string representation
+                                property_str = str(member)
+                                if "var" in property_str or "val" in property_str:
+                                    property_name = property_str.split()[1].split(":")[0].strip()
+                            
+                            if property_name:
+                                print(f"Protected property: {property_name}")
+                                protected_count += 1
         
-        return protected_method_count
+        return protected_count
     
     except Exception as e:
         print(f"Error processing file {file_path}: {e}")
