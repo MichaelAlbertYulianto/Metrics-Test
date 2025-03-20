@@ -212,7 +212,7 @@ def number_private_visibility_methods(file_path):
         return 0
 
 def number_protected_visibility_methods(file_path):
-    """Count the number of protected visibility methods and properties in a Kotlin project."""
+    """Count the number of protected visibility methods in a Kotlin project."""
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             code = f.read()
@@ -223,40 +223,61 @@ def number_protected_visibility_methods(file_path):
         if not result.declarations:
             return 0
         
-        protected_count = 0
+        protected_method_count = 0
 
         for declaration in result.declarations:
             if isinstance(declaration, node.ClassDeclaration):
                 print(f"Class: {declaration.name}")
                 for member in declaration.body.members:
-                    # Check for protected methods (functions)
                     if isinstance(member, node.FunctionDeclaration):
+                        # Check if the method is protected
                         modifiers = getattr(member, "modifiers", [])
-                        if "protected" in modifiers:
+                        is_protected = "protected" in modifiers
+                        
+                        if is_protected:
                             print(f"Protected method: {member.name}")
-                            protected_count += 1
-                    
-                    # Check for protected properties (variables)
-                    if isinstance(member, node.PropertyDeclaration):
-                        modifiers = getattr(member, "modifiers", [])
-                        if "protected" in modifiers:
-                            # Extract the property name
-                            property_name = None
-                            if hasattr(member, "declaration") and hasattr(member.declaration, "name"):
-                                property_name = member.declaration.name
-                            elif hasattr(member, "value") and hasattr(member.value, "name"):
-                                property_name = member.value.name
-                            else:
-                                # Fallback: Try to extract the name from the string representation
-                                property_str = str(member)
-                                if "var" in property_str or "val" in property_str:
-                                    property_name = property_str.split()[1].split(":")[0].strip()
-                            
-                            if property_name:
-                                print(f"Protected property: {property_name}")
-                                protected_count += 1
+                            protected_method_count += 1
         
-        return protected_count
+        return protected_method_count
+    
+    except Exception as e:
+        print(f"Error processing file {file_path}: {e}")
+        return 0
+
+
+def number_package_visibility_methods(file_path):
+    """Count the number of package visibility methods in a Kotlin project."""
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            code = f.read()
+        
+        parser = Parser(code)
+        result = parser.parse()
+
+        if not result.declarations:
+            return 0
+        
+        package_method_count = 0
+
+        for declaration in result.declarations:
+            if isinstance(declaration, node.ClassDeclaration):
+                print(f"Class: {declaration.name}")
+                for member in declaration.body.members:
+                    if isinstance(member, node.FunctionDeclaration):
+                        # Check if the method has package visibility (no explicit visibility modifier)
+                        modifiers = getattr(member, "modifiers", [])
+                        is_package_visibility = (
+                            "public" not in modifiers and
+                            "private" not in modifiers and
+                            "protected" not in modifiers and
+                            "internal" not in modifiers
+                        )
+                        
+                        if is_package_visibility:
+                            print(f"Package visibility method: {member.name}")
+                            package_method_count += 1
+        
+        return package_method_count
     
     except Exception as e:
         print(f"Error processing file {file_path}: {e}")
@@ -301,6 +322,7 @@ def extracted_method(file_path):
         number_public_visibility_methods_values = number_public_visibility_methods(file_path)
         number_private_visibility_methods_values = number_private_visibility_methods(file_path)
         number_protected_visibility_methods_values = number_protected_visibility_methods(file_path)
+        number_package_visibility_methods_values = number_package_visibility_methods(file_path)
 
         for (function_names, (cc_value, loc_count, maxnesting)), woc in zip(method_function.items(), woc_values):
                 
@@ -316,7 +338,8 @@ def extracted_method(file_path):
                         "num_static_not_final_attributes" : num_static_not_final_attributes_values,
                         "number_public_visibility_methods" : number_public_visibility_methods_values,
                         "number_private_visibility_methods" : number_private_visibility_methods_values,
-                        "number_protected_visibility_methods" : number_protected_visibility_methods_values
+                        "number_protected_visibility_methods" : number_protected_visibility_methods_values,
+                        "number_package_visibility_methods" : number_package_visibility_methods_values
                         })
         
         return datas if datas else [{"Package": package_name, "Class": class_name, "Method": "None", "LOC": 0, "Max Nesting": 0, "CC": 0, "WOC": 0,"Error": "No functions found"}]
