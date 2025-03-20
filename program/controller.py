@@ -45,6 +45,7 @@ def count_woc(cc_values):
     total_CC = sum(cc_values)
     return [cc / total_CC if total_CC else 0 for cc in cc_values]
 
+
 def count_num_final_not_static_attributes(file_path):
     """Count the number of final non-static attributes in a Kotlin project."""
     try:
