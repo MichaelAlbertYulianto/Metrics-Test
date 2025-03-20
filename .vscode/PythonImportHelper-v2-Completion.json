@@ -1,0 +1,454 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "tempfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tempfile",
+        "description": "tempfile",
+        "detail": "tempfile",
+        "documentation": {}
+    },
+    {
+        "label": "patoolib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "patoolib",
+        "description": "patoolib",
+        "detail": "patoolib",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "Parser",
+        "importPath": "kopyt",
+        "description": "kopyt",
+        "isExtraImport": true,
+        "detail": "kopyt",
+        "documentation": {}
+    },
+    {
+        "label": "node",
+        "importPath": "kopyt",
+        "description": "kopyt",
+        "isExtraImport": true,
+        "detail": "kopyt",
+        "documentation": {}
+    },
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "zipfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "zipfile",
+        "description": "zipfile",
+        "detail": "zipfile",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "option_menu",
+        "importPath": "streamlit_option_menu",
+        "description": "streamlit_option_menu",
+        "isExtraImport": true,
+        "detail": "streamlit_option_menu",
+        "documentation": {}
+    },
+    {
+        "label": "shutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
+        "documentation": {}
+    },
+    {
+        "label": "BytesIO",
+        "importPath": "io",
+        "description": "io",
+        "isExtraImport": true,
+        "detail": "io",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "importPath": "program",
+        "description": "program",
+        "isExtraImport": true,
+        "detail": "program",
+        "documentation": {}
+    },
+    {
+        "label": "manual_max_nesting",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def manual_max_nesting(body_str):\n    \"\"\" Menghitung max nesting secara manual dari string kode \"\"\"\n    indent_levels = []\n    max_depth = 0\n    for line in body_str.split(\"\\n\"):\n        stripped = line.strip()\n        if stripped.startswith((\"if\", \"try\", \"for\", \"catch\", \"else\", \"when\")):\n            indent_levels.append(stripped)\n            max_depth = max(max_depth, len(indent_levels))\n        elif stripped == \"}\":",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
+        "label": "count_cc_manual",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def count_cc_manual(method_code):\n    \"\"\"\n    Menghitung Cyclomatic Complexity (CC) secara manual dari string kode.\n    \"\"\"\n    cc = 1  # Mulai dari 1 karena setiap metode memiliki setidaknya satu jalur\n    # Daftar kata kunci yang menambah CC\n    control_keywords = [\"if\", \"for\", \"while\", \"when\", \"catch\", \"case\"]\n    # Memisahkan kode menjadi baris-baris\n    lines = method_code.split(\"\\n\")\n    for line in lines:",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
+        "label": "count_woc",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def count_woc(cc_values):\n    \"\"\"Menghitung Weighted Operations Count (WOC).\"\"\"\n    total_CC = sum(cc_values)\n    return [cc / total_CC if total_CC else 0 for cc in cc_values]\ndef count_num_final_not_static_attributes(file_path):\n    \"\"\"Count the number of final non-static attributes in a Kotlin project.\"\"\"\n    try:\n        with open(file_path, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        parser = Parser(code)",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
+        "label": "count_num_final_not_static_attributes",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def count_num_final_not_static_attributes(file_path):\n    \"\"\"Count the number of final non-static attributes in a Kotlin project.\"\"\"\n    try:\n        with open(file_path, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        parser = Parser(code)\n        result = parser.parse()\n        if not result.declarations:\n            return 0\n        attribute_count = 0",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
+        "label": "count_num_static_not_final_attributes",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def count_num_static_not_final_attributes(file_path):\n    \"\"\"Count the number of static but not final attributes in a Kotlin project.\"\"\"\n    try:\n        with open(file_path, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        parser = Parser(code)\n        result = parser.parse()\n        if not result.declarations:\n            return 0\n        attribute_count = 0",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
+        "label": "extracted_method",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def extracted_method(file_path):\n    \"\"\"Ekstrak informasi metode dari file Kotlin.\"\"\"\n    try:\n        with open(file_path, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        parser = Parser(code)\n        result = parser.parse()\n        package_name = result.package.name if result.package else \"Unknown\"\n        if not result.declarations:\n            return [{\"Package\": package_name, \"Class\": \"Unknown\", \"Method\": \"None\", \"LOC\": 0, \"Max Nesting\": 0, \"CC\": 0, \"WOC\": 0, \"Error\": \"No class declaration found\"}]",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
+        "label": "extract_and_parse",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def extract_and_parse(file):\n    \"\"\"Ekstrak arsip ZIP/RAR dan proses file Kotlin.\"\"\"\n    with tempfile.TemporaryDirectory() as temp_dir:\n        temp_file_path = os.path.join(temp_dir, file.name)\n        with open(temp_file_path, \"wb\") as f:\n            f.write(file.getbuffer())\n        try:\n            patoolib.extract_archive(temp_file_path, outdir=temp_dir)\n            kotlin_files = [os.path.join(root, f) for root, _, files in os.walk(temp_dir) for f in files if f.endswith(\".kt\") or f.endswith(\".kts\")]\n            results = []",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "program.index",
+        "description": "program.index",
+        "peekOfCode": "def main():\n    st.title(\"Kotlin Function Extractor\")\n    file = st.file_uploader(\"Upload a RAR or ZIP file containing Kotlin files\", type=[\"rar\", \"zip\"])\n    if file is not None:\n        df = ct.extract_and_parse(file)\n        if isinstance(df, str):\n            st.error(f\"Error extracting archive: {df}\")\n        else:\n            st.dataframe(df)\nif __name__ == \"__main__\":",
+        "detail": "program.index",
+        "documentation": {}
+    },
+    {
+        "label": "analyze_kotlin_files",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def analyze_kotlin_files(directory):\n    # Inisialisasi variabel untuk menghitung jumlah file, kelas, fungsi, properti, dan paket\n    file_count = 0\n    class_count = 0\n    function_count = 0\n    property_count = 0\n    packages = set()  # Set untuk menyimpan nama-nama paket\n    package_dict = {}  # Dictionary untuk menyimpan detail dari setiap paket\n    # Menelusuri direktori untuk mencari file .kt\n    for root, dirs, files_in_dir in os.walk(directory):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "extract_function_content",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def extract_function_content(content, function_name):\n    # Mencari fungsi dengan nama tertentu\n    start_idx = content.find(f\"fun {function_name}(\")\n    if start_idx == -1:\n        return \"\"\n    # Menemukan posisi kurung kurawal pertama\n    start_idx = content.find(\"{\", start_idx)\n    if start_idx == -1:\n        return \"\"\n    # Stack untuk melacak kurung kurawal bersarang",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_nolv",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def calculate_nolv(function_content):\n    # Memecah kode menjadi baris-baris\n    lines = function_content.split(\"\\n\")\n    local_variables = set()\n    # Memeriksa setiap baris untuk menemukan deklarasi variabel lokal\n    for line in lines:\n        line = line.strip()\n        # Mencari 'val' atau 'var' untuk deklarasi variabel lokal\n        if line.startswith(\"val\") or line.startswith(\"var\"):\n            parts = line.split(\"=\")",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_cyclomatic_complexity",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def calculate_cyclomatic_complexity(function_content):\n    # Mencari semua cabang logis dalam konten menggunakan kata kunci kontrol alur\n    logical_branches = re.findall(\n        r\"\\b(if|else|for|while|when|switch|case|try|catch)\\b\", function_content\n    )\n    return len(logical_branches) + 1  # +1 untuk fungsi itu sendiri\n# Fungsi untuk menghitung NUMBER_CONSTRUCTOR_NOTDEFAULTCONSTRUCTOR_METHOD\ndef count_non_default_constructors(content, class_name):\n    # Mencari konstruktor dalam kelas dengan nama class_name\n    constructors = re.findall(",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "count_non_default_constructors",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def count_non_default_constructors(content, class_name):\n    # Mencari konstruktor dalam kelas dengan nama class_name\n    constructors = re.findall(\n        rf\"class\\s+{class_name}\\s*.*?\\((.*?)\\)\", content, re.DOTALL\n    )\n    non_default_constructors = 0  # Inisialisasi penghitung konstruktor non-default\n    for constructor in constructors:\n        # Jika ada parameter dalam konstruktor, itu berarti konstruktor non-default\n        if constructor and not re.match(r\"\\s*\\)\", constructor):\n            non_default_constructors += 1",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "find_functions",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def find_functions(content):\n    # Mengembalikan semua nama fungsi yang ditemukan dalam konten\n    return re.findall(r\"fun\\s+(\\w+)\\s*\\(\", content)\n# Fungsi untuk mencari semua kelas dalam konten file Kotlin\ndef find_classes(content):\n    # Mengembalikan semua nama kelas yang ditemukan dalam konten\n    return re.findall(r\"class\\s+(\\w+)\", content)\n# Fungsi untuk menghapus semua file di dalam direktori\ndef clear_directory(directory):\n    if os.path.exists(directory):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "find_classes",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def find_classes(content):\n    # Mengembalikan semua nama kelas yang ditemukan dalam konten\n    return re.findall(r\"class\\s+(\\w+)\", content)\n# Fungsi untuk menghapus semua file di dalam direktori\ndef clear_directory(directory):\n    if os.path.exists(directory):\n        for filename in os.listdir(directory):\n            file_path = os.path.join(directory, filename)\n            try:\n                if os.path.isfile(file_path) or os.path.islink(file_path):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "clear_directory",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def clear_directory(directory):\n    if os.path.exists(directory):\n        for filename in os.listdir(directory):\n            file_path = os.path.join(directory, filename)\n            try:\n                if os.path.isfile(file_path) or os.path.islink(file_path):\n                    os.unlink(file_path)\n                elif os.path.isdir(file_path):\n                    shutil.rmtree(file_path)\n            except Exception as e:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "analyze_kotlin_files_per_function",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def analyze_kotlin_files_per_function(zip_file, project_name):\n    clear_directory(\"kotlin_files\")  # Membersihkan folder sebelum ekstraksi\n    with zipfile.ZipFile(zip_file, \"r\") as zip_ref:\n        zip_ref.extractall(\"kotlin_files\")  # Mengekstrak semua file ZIP ke dalam folder\n    packages = set()  # Set untuk menyimpan nama paket unik\n    results = []  # List untuk menyimpan hasil analisis\n    extraction_date = datetime.now().strftime(\n        \"%Y-%m-%d\"\n    )  # Mendapatkan tanggal ekstraksi\n    # Iterasi melalui semua file dalam direktori kotlin_files",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "download_csv",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def download_csv(df):\n    # Konversi DataFrame ke CSV dalam bentuk bytes\n    csv = df.to_csv(index=False).encode(\"utf-8\")\n    return csv  # Mengembalikan data CSV dalam bentuk bytes\n# Function to extract ZIP files\ndef extract_zip(zip_file, extract_to):\n    # Membuka file ZIP yang ditentukan dalam mode baca (\"r\").\n    with zipfile.ZipFile(zip_file, \"r\") as zip_ref:\n        # Mengekstrak semua isi file ZIP ke direktori yang ditentukan oleh parameter extract_to.\n        zip_ref.extractall(",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "extract_zip",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def extract_zip(zip_file, extract_to):\n    # Membuka file ZIP yang ditentukan dalam mode baca (\"r\").\n    with zipfile.ZipFile(zip_file, \"r\") as zip_ref:\n        # Mengekstrak semua isi file ZIP ke direktori yang ditentukan oleh parameter extract_to.\n        zip_ref.extractall(\n            extract_to\n        )  # Menggunakan metode extractall() untuk mengekstrak seluruh isi file ZIP.\ndef calculate_cognitive_complexity(line):\n    # Logika untuk menghitung kompleksitas kognitif\n    complexity = 0",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_cognitive_complexity",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def calculate_cognitive_complexity(line):\n    # Logika untuk menghitung kompleksitas kognitif\n    complexity = 0\n    # Memeriksa apakah ada struktur kontrol dalam baris\n    if any(\n        keyword in line\n        for keyword in [\n            \"if\",  # Percabangan jika\n            \"else\",  # Percabangan lain\n            \"for\",  # Perulangan untuk",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_mcc",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def calculate_mcc(line):\n    # Logika untuk menghitung kompleksitas siklomatik\n    count = 0\n    # Memeriksa apakah ada struktur kontrol dalam baris\n    if any(\n        keyword in line\n        for keyword in [\n            \"if\",  # Percabangan jika\n            \"else\",  # Percabangan lain\n            \"for\",  # Perulangan untuk",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "identify_code_smells",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def identify_code_smells(lines):\n    # Fungsi untuk mengidentifikasi code smells\n    smells = 0\n    # Memeriksa setiap baris dalam kode\n    for line in lines:\n        # Contoh smell: metode yang terlalu panjang\n        if (\n            len(line.strip()) > 100\n        ):  # Menghitung jika panjang baris lebih dari 100 karakter\n            smells += 1  # Tingkatkan jumlah code smells",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_complexity_report",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def calculate_complexity_report(directory):\n    loc = 0  # Total baris kode\n    sloc = 0  # Total baris kode sumber\n    lloc = 0  # Total baris logis\n    cloc = 0  # Total baris komentar\n    cognitive_complexity = 0  # Kompleksitas kognitif\n    code_smells = 0  # Jumlah code smells\n    comment_ratio = 0  # Rasio komentar\n    mcc_count = 0  # Hitungan kompleksitas siklomatik\n    total_code_smells = 0  # Total code smells terdeteksi",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "show_summary_report_page",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def show_summary_report_page():\n    st.title(\"Summary Report\")  # Menampilkan judul halaman\n    # Input untuk mengunggah file ZIP\n    uploaded_file = st.file_uploader(\n        \"Upload a ZIP file containing Kotlin files\", type=\"zip\"\n    )\n    if uploaded_file is not None:  # Jika file diunggah\n        # Menggunakan direktori sementara untuk mengekstrak file ZIP\n        with tempfile.TemporaryDirectory() as temp_dir:\n            zip_path = os.path.join(",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "show_detailed_report_page",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def show_detailed_report_page():\n    st.title(\"Detailed Report - Grouped by Package\")  # Menampilkan judul halaman\n    # Input untuk mengunggah file ZIP\n    uploaded_file = st.file_uploader(\n        \"Upload a ZIP file containing Kotlin files\", type=\"zip\"\n    )\n    if uploaded_file is not None:  # Jika file diunggah\n        # Menggunakan direktori sementara untuk mengekstrak file ZIP\n        with tempfile.TemporaryDirectory() as temp_dir:\n            zip_path = os.path.join(",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "show_complexity_report_page",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def show_complexity_report_page():\n    st.title(\"Complexity Report\")  # Menampilkan judul halaman\n    # Input untuk mengunggah file ZIP\n    uploaded_file = st.file_uploader(\n        \"Upload a ZIP file containing Kotlin files\", type=\"zip\"\n    )\n    if uploaded_file is not None:  # Jika file diunggah\n        # Menggunakan direktori sementara untuk mengekstrak file ZIP\n        with tempfile.TemporaryDirectory() as temp_dir:\n            zip_path = os.path.join(",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "show_download_report_page",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def show_download_report_page():\n    st.header(\"Download Report\")\n    project_name = st.text_input(\"Project Name\")\n    uploaded_zip = st.file_uploader(\"Upload Kotlin ZIP\", type=\"zip\")\n    if uploaded_zip and project_name:\n        st.success(\"File uploaded successfully\")\n        results = analyze_kotlin_files_per_function(\n            BytesIO(uploaded_zip.read()), project_name\n        )\n        if results:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def main():\n    # Menambahkan sidebar yang lebih interaktif menggunakan `streamlit-option-menu`\n    page = style_sidebar()  # Mengatur sidebar\n    # Menampilkan\n# Fungsi untuk memberi gaya pada sidebar menggunakan `streamlit-option-menu`\ndef style_sidebar():\n    \"\"\"\n    Fungsi ini digunakan untuk mendesain sidebar menggunakan opsi menu Streamlit.\n    Returns:\n    str: Opsi menu yang dipilih oleh pengguna.",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "style_sidebar",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def style_sidebar():\n    \"\"\"\n    Fungsi ini digunakan untuk mendesain sidebar menggunakan opsi menu Streamlit.\n    Returns:\n    str: Opsi menu yang dipilih oleh pengguna.\n    \"\"\"\n    with st.sidebar:\n        selected = option_menu(\n            menu_title=\"Navigation\",  # Judul menu\n            options=[",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "show_ast_page",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def show_ast_page():\n    index.main()  # Menjalankan fungsi utama dari program AST\n# Fungsi utama untuk menjalankan aplikasi Streamlit\ndef main():\n    # Menambahkan sidebar yang lebih interaktif menggunakan `streamlit-option-menu`\n    page = style_sidebar()  # Mengatur sidebar\n    # Menampilkan halaman berdasarkan pilihan sidebar\n    if page == \"Summary Report\":  # Jika pilihan adalah laporan ringkasan\n        show_summary_report_page()  # Menampilkan halaman laporan ringkasan\n    elif page == \"Detailed Report\":  # Jika pilihan adalah laporan detail",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def main():\n    # Menambahkan sidebar yang lebih interaktif menggunakan `streamlit-option-menu`\n    page = style_sidebar()  # Mengatur sidebar\n    # Menampilkan halaman berdasarkan pilihan sidebar\n    if page == \"Summary Report\":  # Jika pilihan adalah laporan ringkasan\n        show_summary_report_page()  # Menampilkan halaman laporan ringkasan\n    elif page == \"Detailed Report\":  # Jika pilihan adalah laporan detail\n        show_detailed_report_page()  # Menampilkan halaman laporan detail\n    elif page == \"Complexity Report\":  # Jika pilihan adalah laporan kompleksitas\n        show_complexity_report_page()  # Menampilkan halaman laporan kompleksitas",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "method_content",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "method_content = \"\"\"\noverride fun onCreate(savedInstanceState: Bundle?) {\n    super.onCreate(savedInstanceState)\n    Realm.init(this)\n    Realm.compactRealm(Realm.getDefaultConfiguration()!!)\n    _binding = ActivityMainBinding.inflate(layoutInflater)\n    setContentView(binding.root)\n    val batteryEnabled = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(\"batteryEnabled\", false)\n    val bikeEnabled = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(\"bikeEnabled\", false)\n    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "nolv",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "nolv = calculate_nolv(method_content)\nprint(f\"Total NOLV: {nolv}\")\n# Fungsi untuk menghitung CYCLO_METHOD (kompleksitas siklomatik)\ndef calculate_cyclomatic_complexity(function_content):\n    # Mencari semua cabang logis dalam konten menggunakan kata kunci kontrol alur\n    logical_branches = re.findall(\n        r\"\\b(if|else|for|while|when|switch|case|try|catch)\\b\", function_content\n    )\n    return len(logical_branches) + 1  # +1 untuk fungsi itu sendiri\n# Fungsi untuk menghitung NUMBER_CONSTRUCTOR_NOTDEFAULTCONSTRUCTOR_METHOD",
+        "detail": "main",
+        "documentation": {}
+    }
+]
