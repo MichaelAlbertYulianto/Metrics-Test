@@ -272,16 +272,66 @@ def number_package_visibility_methods(file_path):
                             "protected" not in modifiers and
                             "internal" not in modifiers
                         )
-                        
+
                         if is_package_visibility:
                             print(f"Package visibility method: {member.name}")
                             package_method_count += 1
-        
+
         return package_method_count
     
     except Exception as e:
         print(f"Error processing file {file_path}: {e}")
         return 0
+
+def number_standard_design_methods(file_path):
+    """Count the number of standard design pattern methods in a Kotlin project."""
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            code = f.read()
+        
+        parser = Parser(code)
+        result = parser.parse()
+
+        if not result.declarations:
+            return 0
+        
+        design_method_count = 0
+        design_pattern_indicators = {
+            # Factory pattern indicators
+            'create', 'make', 'newInstance', 'of', 'from',
+            # Builder pattern indicators
+            'build', 'builder', 'construct', 'assemble',
+            # Singleton pattern indicators
+            'getInstance', 'instance',
+            # Other common patterns
+            'clone', 'copy', 'parse', 'load', 'save'
+        }
+
+        for declaration in result.declarations:
+            if isinstance(declaration, node.ClassDeclaration):
+                print(f"Class: {declaration.name}")
+                for member in declaration.body.members:
+                    if isinstance(member, node.FunctionDeclaration):
+                        method_name = member.name.lower()
+                        
+                        # Check if method name matches any design pattern indicator
+                        if any(indicator in method_name for indicator in design_pattern_indicators):
+                            print(f"Design method: {member.name}")
+                            design_method_count += 1
+                        
+                        # Check for factory methods by return type
+                        if hasattr(member, 'return_type') and member.return_type:
+                            return_type = str(member.return_type)
+                            if 'factory' in return_type.lower() or 'companion' in str(member.parents).lower():
+                                print(f"Factory method: {member.name}")
+                                design_method_count += 1
+        
+        return design_method_count
+    
+    except Exception as e:
+        print(f"Error processing file {file_path}: {e}")
+        return 0
+
 
 
 def extracted_method(file_path):
@@ -323,6 +373,7 @@ def extracted_method(file_path):
         number_private_visibility_methods_values = number_private_visibility_methods(file_path)
         number_protected_visibility_methods_values = number_protected_visibility_methods(file_path)
         number_package_visibility_methods_values = number_package_visibility_methods(file_path)
+        number_standard_design_methods_values = number_standard_design_methods(file_path)
 
         for (function_names, (cc_value, loc_count, maxnesting)), woc in zip(method_function.items(), woc_values):
                 
@@ -339,7 +390,8 @@ def extracted_method(file_path):
                         "number_public_visibility_methods" : number_public_visibility_methods_values,
                         "number_private_visibility_methods" : number_private_visibility_methods_values,
                         "number_protected_visibility_methods" : number_protected_visibility_methods_values,
-                        "number_package_visibility_methods" : number_package_visibility_methods_values
+                        "number_package_visibility_methods" : number_package_visibility_methods_values,
+                        "number_standard_design_methods" : number_standard_design_methods_values,
                         })
         
         return datas if datas else [{"Package": package_name, "Class": class_name, "Method": "None", "LOC": 0, "Max Nesting": 0, "CC": 0, "WOC": 0,"Error": "No functions found"}]
