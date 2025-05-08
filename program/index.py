@@ -1,5 +1,5 @@
 import streamlit as st
-from . import controller as ct
+from program import controller as ct
 
 def main():
     st.title("Kotlin Function Extractor")

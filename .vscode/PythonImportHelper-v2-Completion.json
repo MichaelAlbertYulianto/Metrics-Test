@@ -61,6 +61,22 @@
         "documentation": {}
     },
     {
+        "label": "controller",
+        "importPath": "program",
+        "description": "program",
+        "isExtraImport": true,
+        "detail": "program",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "importPath": "program",
+        "description": "program",
+        "isExtraImport": true,
+        "detail": "program",
+        "documentation": {}
+    },
+    {
         "label": "re",
         "kind": 6,
         "isExtraImport": true,
@@ -147,14 +163,6 @@
         "documentation": {}
     },
     {
-        "label": "index",
-        "importPath": "program",
-        "description": "program",
-        "isExtraImport": true,
-        "detail": "program",
-        "documentation": {}
-    },
-    {
         "label": "manual_max_nesting",
         "kind": 2,
         "importPath": "program.controller",
@@ -236,6 +244,24 @@
         "documentation": {}
     },
     {
+        "label": "number_standard_design_methods",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def number_standard_design_methods(file_path):\n    \"\"\"Count the number of standard design pattern methods in a Kotlin project.\"\"\"\n    try:\n        with open(file_path, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        parser = Parser(code)\n        result = parser.parse()\n        if not result.declarations:\n            return 0\n        design_method_count = 0",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
+        "label": "number_constructor_DefaultConstructor_methods",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def number_constructor_DefaultConstructor_methods(file_path):\n    \"\"\"Count the number of default constructors in a Kotlin project using AST parsing.\"\"\"\n    try:\n        with open(file_path, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        parser = Parser(code)\n        result = parser.parse()\n        default_constructors = 0\n        for declaration in result.declarations:\n            # Skip if not a class declaration or if it's an object declaration",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
         "label": "extracted_method",
         "kind": 2,
         "importPath": "program.controller",
@@ -250,6 +276,15 @@
         "importPath": "program.controller",
         "description": "program.controller",
         "peekOfCode": "def extract_and_parse(file):\n    \"\"\"Ekstrak arsip ZIP/RAR dan proses file Kotlin.\"\"\"\n    with tempfile.TemporaryDirectory() as temp_dir:\n        temp_file_path = os.path.join(temp_dir, file.name)\n        with open(temp_file_path, \"wb\") as f:\n            f.write(file.getbuffer())\n        try:\n            patoolib.extract_archive(temp_file_path, outdir=temp_dir)\n            kotlin_files = [os.path.join(root, f) for root, _, files in os.walk(temp_dir) for f in files if f.endswith(\".kt\") or f.endswith(\".kts\")]\n            results = []",
+        "detail": "program.controller",
+        "documentation": {}
+    },
+    {
+        "label": "test_default_constructor_detection",
+        "kind": 2,
+        "importPath": "program.controller",
+        "description": "program.controller",
+        "peekOfCode": "def test_default_constructor_detection(file_path):\n    \"\"\"Test the default constructor detection on a specific file.\"\"\"\n    count = number_constructor_DefaultConstructor_methods(file_path)\n    print(f\"\\nAnalyzing file: {os.path.basename(file_path)}\")\n    print(f\"Number of default constructors found: {count}\")\n    # Read and parse the file to show class details\n    with open(file_path, \"r\", encoding=\"utf-8\") as f:\n        code = f.read()\n    parser = Parser(code)\n    result = parser.parse()",
         "detail": "program.controller",
         "documentation": {}
     },

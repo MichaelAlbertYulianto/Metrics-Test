@@ -45,7 +45,6 @@ def count_woc(cc_values):
     total_CC = sum(cc_values)
     return [cc / total_CC if total_CC else 0 for cc in cc_values]
 
-
 def count_num_final_not_static_attributes(file_path):
     """Count the number of final non-static attributes in a Kotlin project."""
     try:
@@ -80,12 +79,14 @@ def count_num_final_not_static_attributes(file_path):
                         if property_name:
                             # print(f"Property: {property_name}")
                             
-                            # Check if the property is final and not static
-                            is_final = "open" not in getattr(member, "modifiers", [])
-                            is_not_static = not any(isinstance(parent, node.CompanionObject) for parent in getattr(member, "parents", []))
+                            # Check if the property is final (either declared with 'val' or not marked as 'open')
+                            is_final = ("val" in str(member) or "open" not in getattr(member, "modifiers", []))
+                            
+                            # Check if the property is not static (not in companion object and not top-level)
+                            is_not_static = not any(isinstance(parent, node.CompanionObject) for parent in getattr(member, "parents", [])) and "static" not in getattr(member, "modifiers", [])
                             
                             if is_final and is_not_static:
-                                # print(f"Final non-static property: {property_name}")
+                                print(f"Final non-static property: {property_name}")
                                 attribute_count += 1
         
         return attribute_count
@@ -332,7 +333,60 @@ def number_standard_design_methods(file_path):
         print(f"Error processing file {file_path}: {e}")
         return 0
 
-
+def number_constructor_DefaultConstructor_methods(file_path):
+    """Count the number of default constructors in a Kotlin project using AST parsing."""
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            code = f.read()
+        
+        parser = Parser(code)
+        result = parser.parse()
+        
+        default_constructors = 0
+        
+        for declaration in result.declarations:
+            # Skip if not a class declaration or if it's an object declaration
+            if not isinstance(declaration, node.ClassDeclaration) or isinstance(declaration, node.ObjectDeclaration):
+                continue
+            
+            # Skip abstract classes
+            if hasattr(declaration, 'modifiers') and 'abstract' in declaration.modifiers:
+                continue
+                
+            has_any_constructor = False
+            class_body = getattr(declaration, 'class_body', None)
+            
+            # Check primary constructor in class header
+            primary_constructor = getattr(declaration, 'primary_constructor', None)
+            if primary_constructor:
+                has_any_constructor = True
+                
+                # Check if the primary constructor has no parameters
+                value_parameters = getattr(primary_constructor, 'value_parameters', [])
+                if not value_parameters:
+                    default_constructors += 1
+            
+            # Check for secondary constructors in class body
+            if class_body:
+                for member in getattr(class_body, 'declarations', []):
+                    if isinstance(member, node.Constructor):
+                        has_any_constructor = True
+                        
+                        # Check if the secondary constructor has no parameters
+                        value_parameters = getattr(member, 'value_parameters', [])
+                        if not value_parameters:
+                            default_constructors += 1
+            
+            # If no constructors found and class is not abstract or object, 
+            # it has an implicit default constructor
+            if not has_any_constructor:
+                default_constructors += 1
+        
+        return default_constructors
+    
+    except Exception as e:
+        print(f"Error processing file {file_path}: {e}")
+        return 0
 
 def extracted_method(file_path):
     """Ekstrak informasi metode dari file Kotlin."""
@@ -374,6 +428,7 @@ def extracted_method(file_path):
         number_protected_visibility_methods_values = number_protected_visibility_methods(file_path)
         number_package_visibility_methods_values = number_package_visibility_methods(file_path)
         number_standard_design_methods_values = number_standard_design_methods(file_path)
+        number_constructor_DefaultConstructor_values = number_constructor_DefaultConstructor_methods(file_path)
 
         for (function_names, (cc_value, loc_count, maxnesting)), woc in zip(method_function.items(), woc_values):
                 
@@ -392,6 +447,7 @@ def extracted_method(file_path):
                         "number_protected_visibility_methods" : number_protected_visibility_methods_values,
                         "number_package_visibility_methods" : number_package_visibility_methods_values,
                         "number_standard_design_methods" : number_standard_design_methods_values,
+                        "number_constructor_DefaultConstructor_methods" : number_constructor_DefaultConstructor_values
                         })
         
         return datas if datas else [{"Package": package_name, "Class": class_name, "Method": "None", "LOC": 0, "Max Nesting": 0, "CC": 0, "WOC": 0,"Error": "No functions found"}]
@@ -417,3 +473,41 @@ def extract_and_parse(file):
             return pd.DataFrame(results)
         except Exception as e:
             return str(e)
+
+def test_default_constructor_detection(file_path):
+    """Test the default constructor detection on a specific file."""
+    count = number_constructor_DefaultConstructor_methods(file_path)
+    print(f"\nAnalyzing file: {os.path.basename(file_path)}")
+    print(f"Number of default constructors found: {count}")
+    
+    # Read and parse the file to show class details
+    with open(file_path, "r", encoding="utf-8") as f:
+        code = f.read()
+    
+    parser = Parser(code)
+    result = parser.parse()
+    
+    print("\nClasses found:")
+    for declaration in result.declarations:
+        if isinstance(declaration, node.ClassDeclaration):
+            print(f"\nClass: {declaration.name}")
+            if hasattr(declaration, 'modifiers'):
+                print(f"Modifiers: {declaration.modifiers}")
+            
+            primary_constructor = getattr(declaration, 'primary_constructor', None)
+            if primary_constructor:
+                params = getattr(primary_constructor, 'value_parameters', [])
+                print(f"Primary constructor found with {len(params)} parameters")
+            else:
+                print("No primary constructor (implicit default constructor)")
+                
+            class_body = getattr(declaration, 'class_body', None)
+            if class_body:
+                secondary_constructors = [m for m in getattr(class_body, 'declarations', []) 
+                                       if isinstance(m, node.Constructor)]
+                if secondary_constructors:
+                    print(f"Secondary constructors found: {len(secondary_constructors)}")
+                else:
+                    print("No secondary constructors")
+                    
+    return count
