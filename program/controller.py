@@ -388,7 +388,7 @@ def number_constructor_DefaultConstructor_methods(file_path):
         print(f"Error processing file {file_path}: {e}")
         return 0
 
-def extracted_method(file_path):
+def extracted_method(file_path, count_num_final_not_static_attributes_values, num_static_not_final_attributes_values, number_public_visibility_methods_values, number_private_visibility_methods_values, number_protected_visibility_methods_values, number_package_visibility_methods_values, number_standard_design_methods_values, number_constructor_DefaultConstructor_values):
     """Ekstrak informasi metode dari file Kotlin."""
     try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -421,14 +421,14 @@ def extracted_method(file_path):
 
         cc_values = [cc for cc, _, _ in method_function.values()]
         woc_values = count_woc(cc_values)
-        count_num_final_not_static_attributes_values = count_num_final_not_static_attributes(file_path)
-        num_static_not_final_attributes_values = count_num_static_not_final_attributes(file_path)
-        number_public_visibility_methods_values = number_public_visibility_methods(file_path)
-        number_private_visibility_methods_values = number_private_visibility_methods(file_path)
-        number_protected_visibility_methods_values = number_protected_visibility_methods(file_path)
-        number_package_visibility_methods_values = number_package_visibility_methods(file_path)
-        number_standard_design_methods_values = number_standard_design_methods(file_path)
-        number_constructor_DefaultConstructor_values = number_constructor_DefaultConstructor_methods(file_path)
+        # count_num_final_not_static_attributes_values = count_num_final_not_static_attributes(file_path)
+        # num_static_not_final_attributes_values = count_num_static_not_final_attributes(file_path)
+        # number_public_visibility_methods_values = number_public_visibility_methods(file_path)
+        # number_private_visibility_methods_values = number_private_visibility_methods(file_path)
+        # number_protected_visibility_methods_values = number_protected_visibility_methods(file_path)
+        # number_package_visibility_methods_values = number_package_visibility_methods(file_path)
+        # number_standard_design_methods_values = number_standard_design_methods(file_path)
+        # number_constructor_DefaultConstructor_values = number_constructor_DefaultConstructor_methods(file_path)
 
         for (function_names, (cc_value, loc_count, maxnesting)), woc in zip(method_function.items(), woc_values):
                 
@@ -465,49 +465,77 @@ def extract_and_parse(file):
         try:
             patoolib.extract_archive(temp_file_path, outdir=temp_dir)
             kotlin_files = [os.path.join(root, f) for root, _, files in os.walk(temp_dir) for f in files if f.endswith(".kt") or f.endswith(".kts")]
-            
+            count_num_final_not_static_attributes_values = 0
+            num_static_not_final_attributes_values = 0
+            number_public_visibility_methods_values = 0
+            number_private_visibility_methods_values = 0
+            number_protected_visibility_methods_values = 0
+            number_package_visibility_methods_values = 0
+            number_standard_design_methods_values = 0
+            number_constructor_DefaultConstructor_values = 0
             results = []
             for kotlin_file in kotlin_files:
-                results.extend(extracted_method(kotlin_file))
+                count_num_final_not_static_attributes_values += count_num_final_not_static_attributes(kotlin_file)
+                num_static_not_final_attributes_values += count_num_static_not_final_attributes(kotlin_file)
+                number_public_visibility_methods_values += number_public_visibility_methods(kotlin_file)
+                number_private_visibility_methods_values += number_private_visibility_methods(kotlin_file)
+                number_protected_visibility_methods_values += number_protected_visibility_methods(kotlin_file)
+                number_package_visibility_methods_values += number_package_visibility_methods(kotlin_file)
+                number_standard_design_methods_values += number_standard_design_methods(kotlin_file)
+                number_constructor_DefaultConstructor_values += number_constructor_DefaultConstructor_methods(kotlin_file)
+            
+            
+            for kotlin_file in kotlin_files:
+                results.extend(extracted_method(kotlin_file, count_num_final_not_static_attributes_values, num_static_not_final_attributes_values, number_public_visibility_methods_values, number_private_visibility_methods_values, number_protected_visibility_methods_values, number_package_visibility_methods_values, number_standard_design_methods_values, number_constructor_DefaultConstructor_values))
+            # results.append({
+            #     "count_num_final_not_static_attributes" : count_num_final_not_static_attributes_values,
+            #     "num_static_not_final_attributes" : num_static_not_final_attributes_values,
+            #     "number_public_visibility_methods" : number_public_visibility_methods_values,
+            #     "number_private_visibility_methods" : number_private_visibility_methods_values,
+            #     "number_protected_visibility_methods" : number_protected_visibility_methods_values,
+            #     "number_package_visibility_methods" : number_package_visibility_methods_values,
+            #     "number_standard_design_methods" : number_standard_design_methods_values,
+            #     "number_constructor_DefaultConstructor_methods" : number_constructor_DefaultConstructor_values
+            # })
             
             return pd.DataFrame(results)
         except Exception as e:
             return str(e)
 
-def test_default_constructor_detection(file_path):
-    """Test the default constructor detection on a specific file."""
-    count = number_constructor_DefaultConstructor_methods(file_path)
-    print(f"\nAnalyzing file: {os.path.basename(file_path)}")
-    print(f"Number of default constructors found: {count}")
+# def test_default_constructor_detection(file_path):
+#     """Test the default constructor detection on a specific file."""
+#     count = number_constructor_DefaultConstructor_methods(file_path)
+#     print(f"\nAnalyzing file: {os.path.basename(file_path)}")
+#     print(f"Number of default constructors found: {count}")
     
-    # Read and parse the file to show class details
-    with open(file_path, "r", encoding="utf-8") as f:
-        code = f.read()
+#     # Read and parse the file to show class details
+#     with open(file_path, "r", encoding="utf-8") as f:
+#         code = f.read()
     
-    parser = Parser(code)
-    result = parser.parse()
+#     parser = Parser(code)
+#     result = parser.parse()
     
-    print("\nClasses found:")
-    for declaration in result.declarations:
-        if isinstance(declaration, node.ClassDeclaration):
-            print(f"\nClass: {declaration.name}")
-            if hasattr(declaration, 'modifiers'):
-                print(f"Modifiers: {declaration.modifiers}")
+#     print("\nClasses found:")
+#     for declaration in result.declarations:
+#         if isinstance(declaration, node.ClassDeclaration):
+#             print(f"\nClass: {declaration.name}")
+#             if hasattr(declaration, 'modifiers'):
+#                 print(f"Modifiers: {declaration.modifiers}")
             
-            primary_constructor = getattr(declaration, 'primary_constructor', None)
-            if primary_constructor:
-                params = getattr(primary_constructor, 'value_parameters', [])
-                print(f"Primary constructor found with {len(params)} parameters")
-            else:
-                print("No primary constructor (implicit default constructor)")
+#             primary_constructor = getattr(declaration, 'primary_constructor', None)
+#             if primary_constructor:
+#                 params = getattr(primary_constructor, 'value_parameters', [])
+#                 print(f"Primary constructor found with {len(params)} parameters")
+#             else:
+#                 print("No primary constructor (implicit default constructor)")
                 
-            class_body = getattr(declaration, 'class_body', None)
-            if class_body:
-                secondary_constructors = [m for m in getattr(class_body, 'declarations', []) 
-                                       if isinstance(m, node.Constructor)]
-                if secondary_constructors:
-                    print(f"Secondary constructors found: {len(secondary_constructors)}")
-                else:
-                    print("No secondary constructors")
+#             class_body = getattr(declaration, 'class_body', None)
+#             if class_body:
+#                 secondary_constructors = [m for m in getattr(class_body, 'declarations', []) 
+#                                        if isinstance(m, node.Constructor)]
+#                 if secondary_constructors:
+#                     print(f"Secondary constructors found: {len(secondary_constructors)}")
+#                 else:
+#                     print("No secondary constructors")
                     
-    return count
+#     return count
