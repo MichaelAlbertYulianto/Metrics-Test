@@ -474,40 +474,40 @@ def extract_and_parse(file):
         except Exception as e:
             return str(e)
 
-def test_default_constructor_detection(file_path):
-    """Test the default constructor detection on a specific file."""
-    count = number_constructor_DefaultConstructor_methods(file_path)
-    print(f"\nAnalyzing file: {os.path.basename(file_path)}")
-    print(f"Number of default constructors found: {count}")
+# def test_default_constructor_detection(file_path):
+#     """Test the default constructor detection on a specific file."""
+#     count = number_constructor_DefaultConstructor_methods(file_path)
+#     print(f"\nAnalyzing file: {os.path.basename(file_path)}")
+#     print(f"Number of default constructors found: {count}")
     
-    # Read and parse the file to show class details
-    with open(file_path, "r", encoding="utf-8") as f:
-        code = f.read()
+#     # Read and parse the file to show class details
+#     with open(file_path, "r", encoding="utf-8") as f:
+#         code = f.read()
     
-    parser = Parser(code)
-    result = parser.parse()
+#     parser = Parser(code)
+#     result = parser.parse()
     
-    print("\nClasses found:")
-    for declaration in result.declarations:
-        if isinstance(declaration, node.ClassDeclaration):
-            print(f"\nClass: {declaration.name}")
-            if hasattr(declaration, 'modifiers'):
-                print(f"Modifiers: {declaration.modifiers}")
+#     print("\nClasses found:")
+#     for declaration in result.declarations:
+#         if isinstance(declaration, node.ClassDeclaration):
+#             print(f"\nClass: {declaration.name}")
+#             if hasattr(declaration, 'modifiers'):
+#                 print(f"Modifiers: {declaration.modifiers}")
             
-            primary_constructor = getattr(declaration, 'primary_constructor', None)
-            if primary_constructor:
-                params = getattr(primary_constructor, 'value_parameters', [])
-                print(f"Primary constructor found with {len(params)} parameters")
-            else:
-                print("No primary constructor (implicit default constructor)")
+#             primary_constructor = getattr(declaration, 'primary_constructor', None)
+#             if primary_constructor:
+#                 params = getattr(primary_constructor, 'value_parameters', [])
+#                 print(f"Primary constructor found with {len(params)} parameters")
+#             else:
+#                 print("No primary constructor (implicit default constructor)")
                 
-            class_body = getattr(declaration, 'class_body', None)
-            if class_body:
-                secondary_constructors = [m for m in getattr(class_body, 'declarations', []) 
-                                       if isinstance(m, node.Constructor)]
-                if secondary_constructors:
-                    print(f"Secondary constructors found: {len(secondary_constructors)}")
-                else:
-                    print("No secondary constructors")
+#             class_body = getattr(declaration, 'class_body', None)
+#             if class_body:
+#                 secondary_constructors = [m for m in getattr(class_body, 'declarations', []) 
+#                                        if isinstance(m, node.Constructor)]
+#                 if secondary_constructors:
+#                     print(f"Secondary constructors found: {len(secondary_constructors)}")
+#                 else:
+#                     print("No secondary constructors")
                     
-    return count
+#     return count
